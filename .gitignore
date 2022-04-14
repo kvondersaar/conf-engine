@@ -6,4 +6,4 @@ config-engine.iml
 venv/
 
 build/
-config-engine.egg-info/
+config_engine.egg-info/
