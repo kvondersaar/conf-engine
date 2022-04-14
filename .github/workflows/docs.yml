@@ -1,0 +1,39 @@
+name: Docs
+on:
+  - page_build
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Sphinx
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs/src/requirements.txt
+
+      - name: Build documentation.
+        run: sphinx-build -a -b html docs/src docs
+
+      - name: Commit changes.
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Doc Build"
+          git add .
+          # commits fail if there are no changes, but we want to force success
+          git commit -m "Automated documentation build action" || true
+
+      - name: Push back to repo.
+        uses: ad-m/github-push-action@master
+        with:
+          branch: docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}

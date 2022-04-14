@@ -1,0 +1,6 @@
+# IDE Files
+.idea/
+config-engine.iml
+
+*/.pytest_cache/
+venv/

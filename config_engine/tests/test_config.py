@@ -1,0 +1,41 @@
+def test_register_option(test_ini_directory, test_config, monkeypatch):
+    monkeypatch.chdir(test_ini_directory)
+    monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
+    from config_engine.options import StringOption
+
+    test_config.register_option(StringOption('default_option'))
+    assert test_config.default_option == 'default_value'
+
+
+def test_register_options(test_ini_directory, test_config, monkeypatch):
+    monkeypatch.chdir(test_ini_directory)
+    monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
+
+    from config_engine.options import StringOption, NumberOption
+    options = [
+        StringOption('default_option'),
+        StringOption('test_option_two'),
+        NumberOption('test_int'),
+    ]
+    test_config.register_options(options)
+    assert test_config.default_option == 'default_value'
+    assert test_config.test_option_two == 'test_two'
+    assert test_config.test_int == 12345
+
+
+def test_register_options_in_group(test_ini_directory, test_config, monkeypatch):
+    monkeypatch.chdir(test_ini_directory)
+    monkeypatch.setattr('sys.argv', ['program', '--config-file', './types/booleans.ini'])
+
+    from config_engine.options import BooleanOption
+    options = [
+        BooleanOption('boolean_true'),
+        BooleanOption('boolean_yes'),
+        BooleanOption('boolean_false'),
+        BooleanOption('boolean_no')
+    ]
+    test_config.register_options(options, 'booleans')
+    assert test_config.booleans.boolean_true
+    assert test_config.booleans.boolean_yes
+    assert not test_config.booleans.boolean_false
+    assert not test_config.booleans.boolean_no
