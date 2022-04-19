@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_register_option(test_ini_directory, test_config, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
@@ -39,3 +42,19 @@ def test_register_options_in_group(test_ini_directory, test_config, monkeypatch)
     assert test_config.booleans.boolean_yes
     assert not test_config.booleans.boolean_false
     assert not test_config.booleans.boolean_no
+
+
+def test_register_same_option_name_with_different_params(test_config):
+    from config_engine.options import StringOption, NumberOption
+    from config_engine.exceptions import DuplicateOptionError
+
+    test_config.register_option(StringOption('default_option'))
+    with pytest.raises(DuplicateOptionError):
+        test_config.register_option(NumberOption('default_option'))
+
+
+def test_register_same_option_name_with_same_params(test_config):
+    from config_engine.options import StringOption
+
+    test_config.register_option(StringOption('default_option'))
+    test_config.register_option(StringOption('default_option'))

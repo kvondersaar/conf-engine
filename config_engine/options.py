@@ -14,6 +14,9 @@ class Option:
     def __call__(self, value):
         return self.option_type(value)
 
+    def __eq__(self, other: 'Option'):
+        return self.name == other.name and self.option_type == other.option_type
+
 
 class StringOption(Option):
     def __init__(self, name, option_type: t.String = None, ignore_case: bool = False, max_length: int = None,

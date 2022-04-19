@@ -56,7 +56,7 @@ class ConfigGroup:
             self.register_option(option)
 
     def register_option(self, option: Option):
-        if option.name in self._opt_cache:
+        if option.name in self._opt_cache and option != self._opt_cache[option.name]:
             raise cfg_exc.DuplicateOptionError(option.name)
         self._opt_cache[option.name] = option
 
