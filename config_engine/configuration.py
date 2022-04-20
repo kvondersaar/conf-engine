@@ -46,6 +46,8 @@ class ConfigGroup:
                 logging.exception(e)
                 raise e
 
+        if not value_found and option.default:
+            return option.default
         if value_found:
             return value
         else:

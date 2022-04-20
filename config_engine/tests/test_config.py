@@ -58,3 +58,17 @@ def test_register_same_option_name_with_same_params(test_config):
 
     test_config.register_option(StringOption('default_option'))
     test_config.register_option(StringOption('default_option'))
+
+
+def test_default_options(test_ini_directory, test_config, monkeypatch):
+    monkeypatch.chdir(test_ini_directory)
+    monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
+
+    from config_engine.options import StringOption, NumberOption
+    options = [
+        StringOption('default_option', default='This should not return the default.'),
+        NumberOption('test_option_default', default=100),
+    ]
+    test_config.register_options(options)
+    assert test_config.default_option == 'default_value'
+    assert test_config.test_option_default == 100
