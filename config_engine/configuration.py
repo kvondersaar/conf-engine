@@ -61,15 +61,6 @@ class ConfigGroup:
         self._opt_cache[option.name] = option
 
 
-# class ConfigurationSingleton(type):
-#     _instances = {}
-#
-#     def __call__(cls, *args, **kwargs):
-#         if cls not in cls._instances:
-#             cls._instances[cls] = super(ConfigurationSingleton, cls).__call__(*args, **kwargs)
-#         return cls._instances[cls]
-
-
 class Configuration:
     def __init__(self):
         """
