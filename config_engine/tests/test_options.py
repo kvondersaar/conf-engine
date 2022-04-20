@@ -1,3 +1,5 @@
+import pytest
+
 import config_engine.options as o
 
 
@@ -41,3 +43,12 @@ def test_boolean_option():
     """Test default values work and cast to bool accordingly."""
     opt = o.BooleanOption('test_boolean_option')
     assert opt('True') is True
+
+
+def test_proper_default():
+    o.NumberOption('test_string_option', default=55)
+
+
+def test_improper_default():
+    with pytest.raises(ValueError):
+        o.NumberOption('test_string_option', default='a string')

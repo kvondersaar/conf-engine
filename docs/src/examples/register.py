@@ -4,7 +4,8 @@ from config_engine import options
 # Create option list.
 options = [
     options.StringOption('username'),
-    options.StringOption('password')
+    options.StringOption('password'),
+    options.BooleanOption('debug', default=False)
 ]
 
 # Register options.

@@ -14,6 +14,9 @@ class Type:
         """
         return True
 
+    def __eq__(self, other: 'Type'):
+        return self.type_name == other.type_name
+
 
 class Number(Type):
     CAST_OPTIONS = [int, float, complex]

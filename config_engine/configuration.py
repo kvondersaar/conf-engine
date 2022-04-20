@@ -46,6 +46,8 @@ class ConfigGroup:
                 logging.exception(e)
                 raise e
 
+        if not value_found and option.default:
+            return option.default
         if value_found:
             return value
         else:
@@ -56,18 +58,9 @@ class ConfigGroup:
             self.register_option(option)
 
     def register_option(self, option: Option):
-        if option.name in self._opt_cache:
+        if option.name in self._opt_cache and option != self._opt_cache[option.name]:
             raise cfg_exc.DuplicateOptionError(option.name)
         self._opt_cache[option.name] = option
-
-
-# class ConfigurationSingleton(type):
-#     _instances = {}
-#
-#     def __call__(cls, *args, **kwargs):
-#         if cls not in cls._instances:
-#             cls._instances[cls] = super(ConfigurationSingleton, cls).__call__(*args, **kwargs)
-#         return cls._instances[cls]
 
 
 class Configuration:
