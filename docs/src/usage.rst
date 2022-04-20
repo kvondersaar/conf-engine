@@ -31,6 +31,10 @@ option for both a username and password.
    :language: python
    :caption: Registering and reading options.
 
+In the above example a debug mode option is also registered with a default
+value of `False`.  Default values will be returned if a value for the option
+cannot be found in any of the configuration sources.
+
 Option Groups
 -------------
 
