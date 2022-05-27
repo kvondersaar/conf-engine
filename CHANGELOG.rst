@@ -1,10 +1,11 @@
 Changelog
 ---------
 
-**[0.4]**
+**[1.0]**
    - Fixed bug in evaluation of precedence when an option is defined in
      more than one source.
    - Fixed bug in defaults where a default of `False` would not be returned.
+   - Convert to MIT license.
 
 **[0.3]**
    - Added `default` argument to Option.  Now Options can be declared with

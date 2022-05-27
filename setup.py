@@ -34,8 +34,8 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Development Status :: 4 - Beta"
-        "License :: OSI Approved :: MIT License"
+        "Development Status :: 4 - Beta",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
     package_dir={"": "./"},
