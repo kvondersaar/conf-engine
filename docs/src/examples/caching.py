@@ -1,5 +1,5 @@
-from config_engine import Configuration
-from config_engine import options
+from conf_engine import Configuration
+from conf_engine import options
 
 # Create option list.
 cache_options = [

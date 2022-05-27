@@ -1,7 +1,7 @@
 Installation
 ============
 
-The config_engine module may be directly from Github via Pip or manually.
+The conf_engine module may be directly from Github via Pip or manually.
 
 Pip Install
 -----------
