@@ -39,7 +39,9 @@ class ConfigGroup:
             try:
                 value = parser().get_option_value(option.name, group)
                 value = option.option_type(value)
-                value_found = True
+                # The first parser in registered parsers list
+                # should take precedence, so we return early.
+                return value
             except cfg_exc.ValueNotFound:
                 continue
             except Exception as e:
