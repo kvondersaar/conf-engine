@@ -46,12 +46,10 @@ class ConfigGroup:
                 logging.exception(e)
                 raise e
 
-        if not value_found and option.default:
-            return option.default
-        if value_found:
-            return value
-        else:
-            raise cfg_exc.ValueNotFound(option.name)
+        if option.default is not None:
+            return option.option_type(option.default)
+        # If we get here, then we've not found the value.
+        raise cfg_exc.ValueNotFound(option.name)
 
     def register_options(self, options: [Option]):
         for option in options:
