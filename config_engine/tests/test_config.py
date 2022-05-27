@@ -83,7 +83,7 @@ def test_option_precedence(test_ini_directory, test_config, monkeypatch):
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
     monkeypatch.setenv('DEFAULT_OPTION', 'env_value')
 
-    from config_engine.options import StringOption, NumberOption
+    from config_engine.options import StringOption
     options = [
         StringOption('default_option', default='This should not return the default.')
     ]
