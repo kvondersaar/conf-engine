@@ -93,7 +93,7 @@ def test_option_precedence(test_ini_directory, test_config, monkeypatch):
 
 def test_option_value_caching(test_config, monkeypatch):
     monkeypatch.setenv('DEFAULT_OPTION', 'env_value')
-    from config_engine.options import StringOption
+    from conf_engine.options import StringOption
     options = [
         StringOption('default_option', default='This should not return the default.')
     ]
@@ -106,7 +106,7 @@ def test_option_value_caching(test_config, monkeypatch):
 
 def test_option_value_cache_flush(test_config, monkeypatch):
     monkeypatch.setenv('OPG_STR_OPTION', 'opt_value')
-    from config_engine.options import StringOption
+    from conf_engine.options import StringOption
     options = [
         StringOption('str_option')
     ]
