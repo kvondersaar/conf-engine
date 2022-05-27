@@ -89,3 +89,32 @@ def test_option_precedence(test_ini_directory, test_config, monkeypatch):
     ]
     test_config.register_options(options)
     assert test_config.default_option == 'env_value'
+
+
+def test_option_value_caching(test_config, monkeypatch):
+    monkeypatch.setenv('DEFAULT_OPTION', 'env_value')
+    from config_engine.options import StringOption
+    options = [
+        StringOption('default_option', default='This should not return the default.')
+    ]
+    test_config.register_options(options)
+    assert not test_config._get_group(None)._option_value_cached('default_option')
+    _ = test_config.default_option
+    assert test_config._get_group(None)._option_value_cached('default_option')
+    assert test_config._get_group(None)._get_option_value_from_cache('default_option') == 'env_value'
+
+
+def test_option_value_cache_flush(test_config, monkeypatch):
+    monkeypatch.setenv('OPG_STR_OPTION', 'opt_value')
+    from config_engine.options import StringOption
+    options = [
+        StringOption('str_option')
+    ]
+    test_config.register_options(options, 'opg')
+    assert not test_config._get_group('opg')._option_value_cached('str_option')
+    _ = test_config.opg.str_option
+    assert test_config._get_group('opg')._option_value_cached('str_option')
+    test_config.flush_cache()
+    assert not test_config._get_group('opg')._option_value_cached('str_option')
+    _ = test_config.opg.str_option
+    assert test_config._get_group('opg')._option_value_cached('str_option')
