@@ -64,11 +64,28 @@ def test_default_options(test_ini_directory, test_config, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
 
-    from config_engine.options import StringOption, NumberOption
+    from config_engine.options import BooleanOption, NumberOption, StringOption
     options = [
         StringOption('default_option', default='This should not return the default.'),
         NumberOption('test_option_default', default=100),
+        BooleanOption('test_bool_option', default=True),
+        BooleanOption('test_bool_false_option', default=False),
     ]
     test_config.register_options(options)
+    assert test_config.test_bool_option
+    assert not test_config.test_bool_false_option
     assert test_config.default_option == 'default_value'
     assert test_config.test_option_default == 100
+
+
+def test_option_precedence(test_ini_directory, test_config, monkeypatch):
+    monkeypatch.chdir(test_ini_directory)
+    monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
+    monkeypatch.setenv('DEFAULT_OPTION', 'env_value')
+
+    from config_engine.options import StringOption
+    options = [
+        StringOption('default_option', default='This should not return the default.')
+    ]
+    test_config.register_options(options)
+    assert test_config.default_option == 'env_value'

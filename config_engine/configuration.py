@@ -39,19 +39,19 @@ class ConfigGroup:
             try:
                 value = parser().get_option_value(option.name, group)
                 value = option.option_type(value)
-                value_found = True
+                # The first parser in registered parsers list
+                # should take precedence, so we return early.
+                return value
             except cfg_exc.ValueNotFound:
                 continue
             except Exception as e:
                 logging.exception(e)
                 raise e
 
-        if not value_found and option.default:
-            return option.default
-        if value_found:
-            return value
-        else:
-            raise cfg_exc.ValueNotFound(option.name)
+        if option.default is not None:
+            return option.option_type(option.default)
+        # If we get here, then we've not found the value.
+        raise cfg_exc.ValueNotFound(option.name)
 
     def register_options(self, options: [Option]):
         for option in options:
