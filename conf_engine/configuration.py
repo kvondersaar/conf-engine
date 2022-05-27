@@ -1,9 +1,9 @@
 import logging
 
-import config_engine.exceptions as cfg_exc
-import config_engine.parsers as parsers
+import conf_engine.exceptions as cfg_exc
+import conf_engine.parsers as parsers
 
-from config_engine.options import Option
+from conf_engine.options import Option
 
 REGISTERED_PARSERS = [
     parsers.EnvironmentParser,

@@ -6,7 +6,7 @@ with open("README.rst", "r", encoding="utf-8") as fh:
 
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
-with open(here+'/config_engine/__version__.py', 'r') as f:
+with open(here+'/conf_engine/__version__.py', 'r') as f:
     exec(f.read(), about)
 
 install_requires = [
@@ -17,17 +17,17 @@ test_requires = install_requires + [
 ]
 
 setuptools.setup(
-    name="config_engine",
+    name="conf_engine",
     version=about['__version__'],
     author="Ken Vondersaar",
     author_email="kvondersaar@connectria.com",
     description="A python module for unified application configuration.",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    url="https://github.com/Connectria/config-engine",
+    url="https://github.com/Connectria/conf-engine",
     project_urls={
-        "Bug Tracker": "https://github.com/Connectria/config-engine",
-        "Documentation": "https://connectria.github.io/config-engine",
+        "Bug Tracker": "https://github.com/Connectria/conf-engine",
+        "Documentation": "https://connectria.github.io/conf-engine",
     },
     classifiers=[
         "Programming Language :: Python :: 3.7",

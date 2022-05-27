@@ -1,6 +1,6 @@
 from typing import Callable, Iterable, Union
 
-import config_engine.types as t
+import conf_engine.types as t
 
 
 class Option:

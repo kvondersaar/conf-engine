@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../../'))
-from config_engine.__version__ import __version__
+from conf_engine.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 
@@ -43,7 +43,7 @@ extensions = [
 
 # Replaces autodoc
 autoapi_type = 'python'
-autoapi_dirs = ['../../config_engine']
+autoapi_dirs = ['../../conf_engine']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

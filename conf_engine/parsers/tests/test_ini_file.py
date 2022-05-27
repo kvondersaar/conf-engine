@@ -1,6 +1,6 @@
-import config_engine.parsers.ini_file as ini_file
+import conf_engine.parsers.ini_file as ini_file
 
-from config_engine.tests.conftest import test_ini_directory
+from conf_engine.tests.conftest import test_ini_directory
 
 
 def test_config_cli_args_with_no_args(monkeypatch):

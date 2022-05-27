@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-**[1.0]**
+**[1.0.0]**
    - Fixed bug in evaluation of precedence when an option is defined in
      more than one source.
    - Fixed bug in defaults where a default of `False` would not be returned.

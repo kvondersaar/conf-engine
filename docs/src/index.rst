@@ -9,7 +9,7 @@ Welcome to Config Engine's Documentation!
    usage.rst
    autoapi/index.rst
 
-What is config engine?
+What is Config Engine?
 -------------------------
 
 A python module used for easy definition and access to configuration data.

@@ -4,7 +4,7 @@ import pytest
 def test_register_option(test_ini_directory, test_config, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
-    from config_engine.options import StringOption
+    from conf_engine.options import StringOption
 
     test_config.register_option(StringOption('default_option'))
     assert test_config.default_option == 'default_value'
@@ -14,7 +14,7 @@ def test_register_options(test_ini_directory, test_config, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
 
-    from config_engine.options import StringOption, NumberOption
+    from conf_engine.options import StringOption, NumberOption
     options = [
         StringOption('default_option'),
         StringOption('test_option_two'),
@@ -30,7 +30,7 @@ def test_register_options_in_group(test_ini_directory, test_config, monkeypatch)
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './types/booleans.ini'])
 
-    from config_engine.options import BooleanOption
+    from conf_engine.options import BooleanOption
     options = [
         BooleanOption('boolean_true'),
         BooleanOption('boolean_yes'),
@@ -45,8 +45,8 @@ def test_register_options_in_group(test_ini_directory, test_config, monkeypatch)
 
 
 def test_register_same_option_name_with_different_params(test_config):
-    from config_engine.options import StringOption, NumberOption
-    from config_engine.exceptions import DuplicateOptionError
+    from conf_engine.options import StringOption, NumberOption
+    from conf_engine.exceptions import DuplicateOptionError
 
     test_config.register_option(StringOption('default_option'))
     with pytest.raises(DuplicateOptionError):
@@ -54,7 +54,7 @@ def test_register_same_option_name_with_different_params(test_config):
 
 
 def test_register_same_option_name_with_same_params(test_config):
-    from config_engine.options import StringOption
+    from conf_engine.options import StringOption
 
     test_config.register_option(StringOption('default_option'))
     test_config.register_option(StringOption('default_option'))
@@ -64,7 +64,7 @@ def test_default_options(test_ini_directory, test_config, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
 
-    from config_engine.options import BooleanOption, NumberOption, StringOption
+    from conf_engine.options import BooleanOption, NumberOption, StringOption
     options = [
         StringOption('default_option', default='This should not return the default.'),
         NumberOption('test_option_default', default=100),
@@ -83,7 +83,7 @@ def test_option_precedence(test_ini_directory, test_config, monkeypatch):
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini'])
     monkeypatch.setenv('DEFAULT_OPTION', 'env_value')
 
-    from config_engine.options import StringOption
+    from conf_engine.options import StringOption
     options = [
         StringOption('default_option', default='This should not return the default.')
     ]
