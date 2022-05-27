@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+**[dev]**
+   - Added caching of configuration data, and cache invalidation methods.
+
 **[0.4]**
    - Fixed bug in evaluation of precedence when an option is defined in
      more than one source.
