@@ -1,5 +1,5 @@
 Welcome to Config Engine's Documentation!
-========================================
+=========================================
 
 .. toctree::
    :maxdepth: 2

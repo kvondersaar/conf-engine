@@ -63,3 +63,21 @@ any files with the ``.ini`` extension and load them as configuration.
 However it is possible to define the location of configuration data by using
 the ``--config-file`` and ``--config-directory`` CLI options when starting
 your application.
+
+Configuration Data Caching
+--------------------------
+
+By default Config Engine will store the value of a configuration option
+once it has been read from the configuration source.  However, this
+caching behavior can be disabled by passing `cache=False` when creating
+a :py:class:`~config_engine.configuration.Configuration` object, or a
+:py:class:`~config_engine.configuration.ConfigGroup`.
+
+Cached data can also be invalidated by calling the `flush_cache()`
+method on either the :py:class:`~config_engine.configuration.Configuration`
+object, or the :py:class:`~config_engine.configuration.ConfigGroup` as
+well.
+
+.. literalinclude:: examples/caching.py
+   :language: python
+   :caption: Registering and accessing option groups.
