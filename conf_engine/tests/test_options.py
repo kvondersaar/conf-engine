@@ -1,6 +1,6 @@
 import pytest
 
-import config_engine.options as o
+import conf_engine.options as o
 
 
 def test_string_option():

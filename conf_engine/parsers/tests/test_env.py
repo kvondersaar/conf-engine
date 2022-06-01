@@ -1,4 +1,4 @@
-import config_engine.parsers.env as env
+import conf_engine.parsers.env as env
 
 
 def test_get_env_var(monkeypatch):

@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../../'))
-from config_engine.__version__ import __version__
+from conf_engine.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 
@@ -43,7 +43,7 @@ extensions = [
 
 # Replaces autodoc
 autoapi_type = 'python'
-autoapi_dirs = ['../../config_engine']
+autoapi_dirs = ['../../conf_engine']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -51,7 +51,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['tests']
+exclude_patterns = ['test_*', 'conftest.py']
 
 
 # -- Options for HTML output -------------------------------------------------

@@ -1,4 +1,4 @@
-import config_engine.configuration as c
+import conf_engine.configuration as c
 
 ConfigGroup = c.ConfigGroup
 Configuration = c.Configuration

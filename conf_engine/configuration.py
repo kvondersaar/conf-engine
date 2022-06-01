@@ -1,9 +1,9 @@
 import logging
 
-import config_engine.exceptions as cfg_exc
-import config_engine.parsers as parsers
+import conf_engine.exceptions as cfg_exc
+import conf_engine.parsers as parsers
 
-from config_engine.options import Option
+from conf_engine.options import Option, UNDEFINED
 
 REGISTERED_PARSERS = [
     parsers.EnvironmentParser,
@@ -12,13 +12,17 @@ REGISTERED_PARSERS = [
 
 
 class ConfigGroup:
-    def __init__(self, name):
+    def __init__(self, name, cache: bool = True):
         """
         A collection of related configuration options.
         :param name:
+        :param cache: When True (default) this ConfigGroup will store
+                      values after they are read from configuration.
         """
         self._name = name
+        self._cache = cache
         self._opt_cache = {}
+        self._value_cache = {}
 
     def __getattr__(self, item: str):
         return self._get_option(item)
@@ -31,14 +35,29 @@ class ConfigGroup:
             return self._get_option_value(self._opt_cache[option], self._name)
         raise cfg_exc.UnregisteredOption(option)
 
-    @staticmethod
-    def _get_option_value(option: Option, group):
-        value = None
-        value_found = False
+    def _cache_option_value(self, name, value):
+        self._value_cache[name] = value
+
+    def _get_option_value_from_cache(self, name):
+        return self._value_cache[name]
+
+    def _option_value_cached(self, name):
+        return name in self._value_cache if self._cache else False
+
+    def _get_option_value(self, option: Option, group):
+        if self._option_value_cached(option.name):
+            return self._get_option_value_from_cache(option.name)
+        else:
+            return self._get_option_value_from_source(option, group)
+
+    def _get_option_value_from_source(self, option: Option, group):
         for parser in REGISTERED_PARSERS:
             try:
                 value = parser().get_option_value(option.name, group)
+                # Validate the value is correctly formatted.
                 value = option.option_type(value)
+                # Store the value in the value cache.
+                self._cache_option_value(option.name, value)
                 # The first parser in registered parsers list
                 # should take precedence, so we return early.
                 return value
@@ -48,10 +67,23 @@ class ConfigGroup:
                 logging.exception(e)
                 raise e
 
-        if option.default is not None:
+        if option.default is not UNDEFINED:
             return option.option_type(option.default)
         # If we get here, then we've not found the value.
         raise cfg_exc.ValueNotFound(option.name)
+
+    def flush_cache(self, name: str = None):
+        """
+        Flush the value cache and read from configuration source on
+        next access.
+        :param name: If name is provided, only the value for the named
+        option is flushed.
+        :return:
+        """
+        if name:
+            self._value_cache.pop(name)
+        else:
+            self._value_cache = {}
 
     def register_options(self, options: [Option]):
         for option in options:
@@ -64,10 +96,17 @@ class ConfigGroup:
 
 
 class Configuration:
-    def __init__(self):
+    def __init__(self, cache: bool = True):
         """
         Configuration object that represents the configuration of the application.
+        :param cache: When True (default) Config Engine will read the value
+                      of the option from the configuration source once, and then
+                      store the value for subsequent lookups.  If False, then
+                      the value is not stored and is always read from the
+                      configuration source.  When set here, ConfigEngine will
+                      set pass this along to auto created configuration groups.
         """
+        self._cache = cache
         self._group_cache = {None: ConfigGroup(None)}
 
     def __getattr__(self, item):
@@ -87,6 +126,14 @@ class Configuration:
         for option in options:
             self.register_option(option, group=group)
 
+    def flush_cache(self):
+        """
+        Signal all configuration groups to flush their cache and
+        read from configuration source on next access.
+        """
+        for _, group in self._group_cache.items():
+            group.flush_cache()
+
     def register_option(self, option: Option, group: str = None, create_group: bool = True):
         """
         Register options with the config.  If group is specified, the options are
@@ -98,7 +145,7 @@ class Configuration:
         """
         if group and group not in self._group_cache:
             if create_group:
-                self._group_cache[group] = ConfigGroup(group)
+                self._group_cache[group] = ConfigGroup(group, cache=self._cache)
             else:
                 raise cfg_exc.UnregisteredGroup(group)
         self._group_cache[group].register_option(option)
@@ -115,9 +162,6 @@ class Configuration:
 
         If the option matches a group name, the group object is returned and the
         subsequent attribute access is handled by the group object.
-
-        :param group:
-        :return:
         """
         # If we find the option name in our cache, that means what was passed to
         # __getattr__() is the group value.  We return that and have the group object

@@ -1,6 +1,15 @@
 from typing import Callable, Iterable, Union
 
-import config_engine.types as t
+import conf_engine.types as t
+
+
+class _UndefinedDefault:
+    """An object that represents a default that is not defined.  Should not be
+    used outside the Config Engine module itself."""
+    pass
+
+
+UNDEFINED = _UndefinedDefault()
 
 
 class Option:
@@ -10,11 +19,12 @@ class Option:
     Inheriting classes may implement additional kwargs as appropriate to their type.
     When a default is set it will be validated using the option_type specified.
     """
-    def __init__(self, name, option_type: t.Type = None, default: any = None):
+
+    def __init__(self, name, option_type: t.Type = None, default: any = UNDEFINED):
         self.name = name
         self.option_type = option_type if option_type else t.String()
         self.default = default
-        if default:
+        if default is not UNDEFINED:
             try:
                 option_type(default)
             except ValueError as e:
@@ -34,7 +44,8 @@ class StringOption(Option):
     def __init__(self, *args, option_type: t.String = None, ignore_case: bool = False, max_length: int = None,
                  choices: Iterable = None, type_name: str = 'string type', **kwargs):
         if not option_type:
-            kwargs['option_type'] = t.String(ignore_case=ignore_case, max_length=max_length, choices=choices, type_name=type_name)
+            kwargs['option_type'] = t.String(ignore_case=ignore_case, max_length=max_length, choices=choices,
+                                             type_name=type_name)
         super().__init__(*args, **kwargs)
 
 

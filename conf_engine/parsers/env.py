@@ -1,6 +1,6 @@
 import os
 
-from config_engine.exceptions import ValueNotFound
+from conf_engine.exceptions import ValueNotFound
 
 
 class EnvironmentParser:
