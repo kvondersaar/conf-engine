@@ -3,7 +3,7 @@ import logging
 import conf_engine.exceptions as cfg_exc
 import conf_engine.parsers as parsers
 
-from conf_engine.options import Option
+from conf_engine.options import Option, UNDEFINED
 
 REGISTERED_PARSERS = [
     parsers.EnvironmentParser,
@@ -67,7 +67,7 @@ class ConfigGroup:
                 logging.exception(e)
                 raise e
 
-        if option.default is not None:
+        if option.default is not UNDEFINED:
             return option.option_type(option.default)
         # If we get here, then we've not found the value.
         raise cfg_exc.ValueNotFound(option.name)

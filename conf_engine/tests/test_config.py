@@ -70,12 +70,14 @@ def test_default_options(test_ini_directory, test_config, monkeypatch):
         NumberOption('test_option_default', default=100),
         BooleanOption('test_bool_option', default=True),
         BooleanOption('test_bool_false_option', default=False),
+        StringOption('test_none_default_option', default=None)
     ]
     test_config.register_options(options)
     assert test_config.test_bool_option
     assert not test_config.test_bool_false_option
     assert test_config.default_option == 'default_value'
     assert test_config.test_option_default == 100
+    assert test_config.test_none_default_option is None
 
 
 def test_option_precedence(test_ini_directory, test_config, monkeypatch):
