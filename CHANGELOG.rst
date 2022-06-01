@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**[1.0.1]**
+   - Fixed bug where options with a default of None were not returning None
+     when the option was unset in the configuration sources.
+
 **[1.0.0]**
    - Fixed bug in evaluation of precedence when an option is defined in
      more than one source.
