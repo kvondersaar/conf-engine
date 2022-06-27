@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+**[1.0.2]**
+   - Added namespaces.
+
 **[1.0.1]**
    - Fixed bug where options with a default of None were not returning None
      when the option was unset in the configuration sources.

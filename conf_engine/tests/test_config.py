@@ -120,3 +120,18 @@ def test_option_value_cache_flush(test_config, monkeypatch):
     assert not test_config._get_group('opg')._option_value_cached('str_option')
     _ = test_config.opg.str_option
     assert test_config._get_group('opg')._option_value_cached('str_option')
+
+
+@pytest.mark.parametrize('test_env, test_group, test_expression', [
+    ('TESTNS_TEST_VAR', None, 'config.test_var'),
+    ('TESTNS_TEST_GROUP_TEST_VAR', 'test_group', 'config.test_group.test_var')
+])
+def test_custom_config_namespace(test_env, test_group,
+                                 test_expression, monkeypatch):
+    monkeypatch.setenv(test_env, 'test_value')
+    from conf_engine import Configuration
+    from conf_engine.options import StringOption
+    config = Configuration(namespace='testns')
+    config.register_option(StringOption('test_var'), group=test_group)
+    value = eval(test_expression)
+    assert value == 'test_value'

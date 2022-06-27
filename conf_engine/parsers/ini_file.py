@@ -6,7 +6,7 @@ from conf_engine.exceptions import ValueNotFound
 
 
 class INIFileParser:
-    def __init__(self):
+    def __init__(self, **kwargs):
         self._path_opts = self._register_paths()
 
     @staticmethod
