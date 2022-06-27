@@ -3,6 +3,8 @@ import logging
 import conf_engine.exceptions as cfg_exc
 import conf_engine.parsers as parsers
 
+from typing import Union
+
 from conf_engine.options import Option, UNDEFINED
 
 REGISTERED_PARSERS = [
@@ -12,14 +14,20 @@ REGISTERED_PARSERS = [
 
 
 class ConfigGroup:
-    def __init__(self, name, cache: bool = True):
+    def __init__(self, name: Union[str, None],
+                 namespace: str = None, cache: bool = True):
         """
         A collection of related configuration options.
-        :param name:
+
+        :param name: The configuration group name.
+        :param namespace: Namespace is passed through to parsers that support
+            it.  See :py:meth:`__init__()` docs for the parser class
+            for more details.
         :param cache: When True (default) this ConfigGroup will store
-                      values after they are read from configuration.
+            values after they are read from configuration.
         """
         self._name = name
+        self._namespace = namespace
         self._cache = cache
         self._opt_cache = {}
         self._value_cache = {}
@@ -53,7 +61,8 @@ class ConfigGroup:
     def _get_option_value_from_source(self, option: Option, group):
         for parser in REGISTERED_PARSERS:
             try:
-                value = parser().get_option_value(option.name, group)
+                parser = parser(namespace=self._namespace)
+                value = parser.get_option_value(option.name, group)
                 # Validate the value is correctly formatted.
                 value = option.option_type(value)
                 # Store the value in the value cache.
@@ -96,18 +105,24 @@ class ConfigGroup:
 
 
 class Configuration:
-    def __init__(self, cache: bool = True):
+    def __init__(self, namespace: str = None, cache: bool = True):
         """
-        Configuration object that represents the configuration of the application.
-        :param cache: When True (default) Config Engine will read the value
-                      of the option from the configuration source once, and then
-                      store the value for subsequent lookups.  If False, then
-                      the value is not stored and is always read from the
-                      configuration source.  When set here, ConfigEngine will
-                      set pass this along to auto created configuration groups.
+        Configuration object that represents the configuration of the
+        application.
+
+        :param namespace: Namespace is passed through to parsers that support
+            it.  See :py:meth:`__init__()` docs for the parser class
+            for more details.
+        :param cache: When True (default) Config Engine will read the
+            value of the option from the configuration source once, and
+            then store the value for subsequent lookups.  If False,
+            then the value is not stored and is always read from the
+            configuration source.  When set here, ConfigEngine will set
+            pass this along to auto created configuration groups.
         """
         self._cache = cache
-        self._group_cache = {None: ConfigGroup(None)}
+        self._group_cache = {None: ConfigGroup(None, namespace=namespace)}
+        self._namespace = namespace
 
     def __getattr__(self, item):
         return self._get_group(item)
@@ -145,7 +160,9 @@ class Configuration:
         """
         if group and group not in self._group_cache:
             if create_group:
-                self._group_cache[group] = ConfigGroup(group, cache=self._cache)
+                self._group_cache[group] = ConfigGroup(group,
+                                                       namespace=self._namespace,
+                                                       cache=self._cache)
             else:
                 raise cfg_exc.UnregisteredGroup(group)
         self._group_cache[group].register_option(option)

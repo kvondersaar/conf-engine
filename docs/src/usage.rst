@@ -81,3 +81,18 @@ well.
 .. literalinclude:: examples/caching.py
    :language: python
    :caption: Registering and accessing option groups.
+
+Namespaces
+----------
+
+The environment parser supports an optional namespace which will
+prepend each option with the namespace and an underscore to help
+ensure that the given option doesn't have a name collision with other
+unrelated environment variables.  Namespaces require the use of a
+declared configuration object rather than using the one provided
+in the ConfEngine module.  Declaring options and accessing option
+values through the configuration object remains unchanged.
+
+.. literalinclude:: examples/namespaces.py
+   :language: python
+   :caption: Using namespaces.
