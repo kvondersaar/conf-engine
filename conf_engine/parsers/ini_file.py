@@ -2,8 +2,8 @@ import argparse
 import configparser
 import os
 
-from conf_engine.exceptions import ValueNotFound
-
+from conf_engine.core.exceptions import ValueNotFound
+from conf_engine.options import Option
 
 class INIFileParser:
     def __init__(self, **kwargs):
@@ -26,14 +26,14 @@ class INIFileParser:
             'config_dirs': ['./'] if not args.config_dir and not args.config_file else args.config_dir or []
         }
 
-    def get_option_value(self, option: str, group: str = None):
+    def get_option_value(self, option: Option, group: str = None):
         if not group:
             group = 'DEFAULT'
         files = self._path_opts['config_files'] + self._get_ini_files_from_dirs()
         ini_cfg = configparser.ConfigParser()
         ini_cfg.read(files)
-        if group in ini_cfg and option in ini_cfg[group]:
-            return ini_cfg[group][option]
+        if group in ini_cfg and option.name in ini_cfg[group]:
+            return ini_cfg[group][option.name]
         else:
             raise ValueNotFound(option)
 

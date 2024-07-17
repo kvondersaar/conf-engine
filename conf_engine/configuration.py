@@ -62,7 +62,7 @@ class ConfigGroup:
         for parser in REGISTERED_PARSERS:
             try:
                 parser = parser(namespace=self._namespace)
-                value = parser.get_option_value(option.name, group)
+                value = parser.get_option_value(option, group)
                 # Validate the value is correctly formatted.
                 value = option.option_type(value)
                 # Store the value in the value cache.
