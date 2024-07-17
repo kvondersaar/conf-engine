@@ -8,6 +8,7 @@ from typing import Union
 from conf_engine.options import Option, UNDEFINED
 
 REGISTERED_PARSERS = [
+    parsers.CLIParser,
     parsers.EnvironmentParser,
     parsers.INIFileParser,
 ]
