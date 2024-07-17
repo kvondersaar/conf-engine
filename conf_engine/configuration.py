@@ -1,6 +1,6 @@
 import logging
 
-import conf_engine.exceptions as cfg_exc
+import conf_engine.core.exceptions as cfg_exc
 import conf_engine.parsers as parsers
 
 from typing import Union

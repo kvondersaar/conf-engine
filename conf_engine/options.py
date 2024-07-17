@@ -1,6 +1,6 @@
 from typing import Callable, Iterable, Union
 
-import conf_engine.types as t
+import conf_engine.core.types as t
 
 
 class _UndefinedDefault:
