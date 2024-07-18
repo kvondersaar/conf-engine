@@ -17,13 +17,25 @@ class CLIParser:
         opt_name = opt_name if not self.namespace else f'{self.namespace}-{opt_name}'
         opt_name = f'--{opt_name.replace('_', '-').lower()}'
 
+        is_boolean = isinstance(option, BooleanOption)
+        is_flag = is_boolean and option.flag
         try:
             idx = sys.argv.index(opt_name)
-            if isinstance(option, BooleanOption):
-                return True if idx else False
+            # If it's a boolean option and the flag is present, we return True regardless of
+            # any following values.
+            if is_boolean and is_flag:
+                return True
+            # If there's no data after
+            if len(sys.argv) < idx+1:
+                raise ValueNotFound(option.name)
+            return sys.argv[idx+1]
 
-            return sys.argv.index(idx+1)
+        # Catch ValueError if sys.argv.index() cannot find our option.
         except ValueError as e:
+            # If it's a boolean option, and flag is set, then we return False when it's not present.
+            if is_boolean and is_flag:
+                return False
+            # Otherwise we didn't find the option at all.
             raise ValueNotFound(option.name)
-        except Exception as e:
-            raise e
+        except IndexError as e:
+            raise ValueNotFound(option.name)
