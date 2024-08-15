@@ -29,7 +29,14 @@ def test_get_cli_var(test_opt, test_group, test_ns, monkeypatch):
     (True, ['--test-flag'], True),
     (False, ['--test-flag', 'yes'], 'yes'),
     (True, [], False),
-    (False, ['--test-flag', 'no'], 'no')
+    (False, ['--test-flag', 'no'], 'no'),
+    (True, ['--test-flag', '--extra-flag'], True),
+    (False, ['--test-flag', 'yes', '--extra-flag'], 'yes'),
+    (True, ['--extra-flag'], False),
+    (False, ['--test-flag', 'no', '--extra-flag'], 'no'),
+    (True, ['--extra-flag', '--test-flag'], True),
+    (False, ['--extra-flag', '--test-flag', 'yes'], 'yes'),
+    (False, ['--extra-flag', '--test-flag', 'no'], 'no')
     ])
 def test_get_cli_boolean(flag, add_argv, expected, monkeypatch):
     import sys
