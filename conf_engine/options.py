@@ -1,6 +1,6 @@
 from typing import Callable, Iterable, Union
 
-import conf_engine.types as t
+import conf_engine.core.types as t
 
 
 class _UndefinedDefault:
@@ -60,6 +60,7 @@ class NumberOption(Option):
 
 
 class BooleanOption(Option):
-    def __init__(self, *args, option_type=t.Boolean(), **kwargs):
+    def __init__(self, *args, option_type=t.Boolean(), flag: bool = False, **kwargs):
         kwargs['option_type'] = option_type
+        self.flag = flag
         super().__init__(*args, **kwargs)

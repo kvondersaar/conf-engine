@@ -1,6 +1,5 @@
 from typing import Callable, Iterable, Union
 
-
 class Type:
     def __init__(self, type_name: str = 'unknown type'):
         self.type_name = type_name

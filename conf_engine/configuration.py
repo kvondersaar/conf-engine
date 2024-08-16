@@ -1,6 +1,6 @@
 import logging
 
-import conf_engine.exceptions as cfg_exc
+import conf_engine.core.exceptions as cfg_exc
 import conf_engine.parsers as parsers
 
 from typing import Union
@@ -8,6 +8,7 @@ from typing import Union
 from conf_engine.options import Option, UNDEFINED
 
 REGISTERED_PARSERS = [
+    parsers.CLIParser,
     parsers.EnvironmentParser,
     parsers.INIFileParser,
 ]
@@ -62,7 +63,7 @@ class ConfigGroup:
         for parser in REGISTERED_PARSERS:
             try:
                 parser = parser(namespace=self._namespace)
-                value = parser.get_option_value(option.name, group)
+                value = parser.get_option_value(option, group)
                 # Validate the value is correctly formatted.
                 value = option.option_type(value)
                 # Store the value in the value cache.

@@ -1,5 +1,8 @@
+import pytest
+
 import conf_engine.parsers.ini_file as ini_file
 
+from conf_engine.options import Option
 from conf_engine.tests.conftest import test_ini_directory
 
 
@@ -32,10 +35,13 @@ def test_ignore_unknown_args(monkeypatch):
     monkeypatch.setattr('sys.argv', ['program', '--unknown_arg'])
 
 
-def test_get_config_values(test_ini_directory, monkeypatch):
+@pytest.mark.parametrize('option, group, value', [
+    (Option('default_option'), None, 'default_value'),
+    (Option('integer'), 'numbers', '12345'),
+    (Option('boolean_no'), 'booleans', 'no')
+])
+def test_get_config_values(option, group, value, test_ini_directory, monkeypatch):
     monkeypatch.chdir(test_ini_directory)
     monkeypatch.setattr('sys.argv', ['program', '--config-file', './test.ini', '--config-dir', './types'])
     ifp = ini_file.INIFileParser()
-    assert ifp.get_option_value('default_option') == 'default_value'
-    assert ifp.get_option_value('integer', 'numbers') == '12345'
-    assert ifp.get_option_value('boolean_no', 'booleans') == 'no'
+    assert ifp.get_option_value(option, group) == value

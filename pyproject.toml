@@ -1,5 +1,39 @@
+[project]
+name="conf_engine"
+authors = [
+    {name = "Ken Vondersaar", email = "ken.vondersaar@gmail.com"}
+]
+maintainers = [
+    {name = "Ken Vondersaar", email = "ken.vondersaar@gmail.com"}
+]
+description="A python module for unified application configuration."
+readme="README.rst"
+license={file="LICENSE"}
+version='1.0.3'
+keywords=['config', 'configuration']
+classifiers=[
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+#Homepage = "https://example.com"
+#Documentation = "https://readthedocs.org"
+Repository = "https://github.com/kvondersaar/conf-engine.git"
+Issues = "https://github.com/kvondersaar/conf-engine/issues"
+Changelog = "https://github.com/kvondersaar/conf-engine/blob/master/CHANGELOG.rst"
+
+
 [build-system]
 requires = [
     "setuptools"
 ]
 build-backend = "setuptools.build_meta"
+
