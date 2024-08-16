@@ -29,7 +29,7 @@ class CLIParser:
         # Append group name.
         opt_name = option.name if not group else f'{group}-{option.name}'
         opt_name = opt_name if not self.namespace else f'{self.namespace}-{opt_name}'
-        opt_name = f'--{opt_name.replace('_', '-').lower()}'
+        opt_name = f"--{opt_name.replace('_', '-').lower()}"
 
         is_present, value = self._parse_argv(opt_name)
 
