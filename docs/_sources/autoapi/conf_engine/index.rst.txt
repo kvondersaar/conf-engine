@@ -1,0 +1,38 @@
+conf_engine
+===========
+
+.. py:module:: conf_engine
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/conf_engine/__version__/index
+   /autoapi/conf_engine/configuration/index
+   /autoapi/conf_engine/options/index
+   /autoapi/conf_engine/parsers/index
+   /autoapi/conf_engine/tests/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   conf_engine.ConfigGroup
+   conf_engine.Configuration
+   conf_engine.config
+
+
+Package Contents
+----------------
+
+.. py:data:: ConfigGroup
+
+.. py:data:: Configuration
+
+.. py:data:: config
+

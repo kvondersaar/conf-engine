@@ -1,0 +1,21 @@
+conf_engine.__version__
+=======================
+
+.. py:module:: conf_engine.__version__
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   conf_engine.__version__.__version__
+
+
+Module Contents
+---------------
+
+.. py:data:: __version__
+   :value: '1.1.0'
+
+

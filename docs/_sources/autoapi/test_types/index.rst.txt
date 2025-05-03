@@ -1,0 +1,79 @@
+test_types
+==========
+
+.. py:module:: test_types
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   test_types.TestString
+   test_types.TestNumber
+   test_types.TestBoolean
+
+
+Module Contents
+---------------
+
+.. py:class:: TestString
+
+   .. py:method:: test_case_sensitive()
+
+
+   .. py:method:: test_invalid_choices()
+
+
+   .. py:method:: test_case_sensitive_choices()
+
+
+   .. py:method:: test_case_insensitive_choices()
+
+
+.. py:class:: TestNumber
+
+   .. py:method:: test_number()
+
+
+   .. py:method:: test_integer()
+
+
+   .. py:method:: test_float()
+
+
+   .. py:method:: test_is_integer_method()
+
+
+   .. py:method:: test_is_float_method()
+
+
+   .. py:method:: test_is_number_method()
+
+
+   .. py:method:: test_minimum()
+
+
+   .. py:method:: test_maximum()
+
+
+   .. py:method:: test_choices()
+
+
+   .. py:method:: test_invalid_choice()
+
+
+   .. py:method:: test_minimum_over_maximum()
+
+
+.. py:class:: TestBoolean
+
+   .. py:method:: test_true_values()
+
+
+   .. py:method:: test_false_values()
+
+
+   .. py:method:: test_not_boolean()
+
+

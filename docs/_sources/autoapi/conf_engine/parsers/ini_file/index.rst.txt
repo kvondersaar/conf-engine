@@ -1,0 +1,33 @@
+conf_engine.parsers.ini_file
+============================
+
+.. py:module:: conf_engine.parsers.ini_file
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   conf_engine.parsers.ini_file.INIFileParser
+
+
+Module Contents
+---------------
+
+.. py:class:: INIFileParser(**kwargs)
+
+   .. py:attribute:: _path_opts
+
+
+   .. py:method:: _register_paths()
+      :staticmethod:
+
+
+
+   .. py:method:: get_option_value(option: conf_engine.options.Option, group: str = None)
+
+
+   .. py:method:: _get_ini_files_from_dirs() -> list
+
+

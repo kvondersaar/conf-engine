@@ -1,0 +1,154 @@
+types
+=====
+
+.. py:module:: types
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   types.Type
+   types.Number
+   types.Integer
+   types.Float
+   types.String
+   types.Boolean
+
+
+Module Contents
+---------------
+
+.. py:class:: Type(type_name: str = 'unknown type')
+
+   .. py:attribute:: type_name
+      :value: 'unknown type'
+
+
+
+   .. py:method:: __call__(value)
+
+      Value is passed to the type object for the object to verify that the value
+      matches the parameters defined for the type.
+      :param value:
+      :return:
+
+
+
+   .. py:method:: __eq__(other: Type)
+
+
+.. py:class:: Number(minimum: Union[int, float] = None, maximum: Union[int, float] = None, choices: Iterable = None, type_name: str = 'number type', cast: Callable = int)
+
+   Bases: :py:obj:`Type`
+
+
+   .. py:attribute:: CAST_OPTIONS
+
+
+   .. py:attribute:: _cast
+
+
+   .. py:attribute:: _minimum
+      :value: None
+
+
+
+   .. py:attribute:: _maximum
+      :value: None
+
+
+
+   .. py:attribute:: _choices
+      :value: []
+
+
+
+   .. py:method:: __call__(value)
+
+      Value is passed to the type object for the object to verify that the value
+      matches the parameters defined for the type.
+      :param value:
+      :return:
+
+
+
+   .. py:method:: _is_float(value)
+      :staticmethod:
+
+
+
+   .. py:method:: _is_integer(value)
+      :staticmethod:
+
+
+
+   .. py:method:: _is_number(value)
+      :staticmethod:
+
+
+
+.. py:class:: Integer(minimum: int = None, maximum: int = None, choices: Iterable = None, type_name: str = 'number type', cast: Callable = int)
+
+   Bases: :py:obj:`Number`
+
+
+.. py:class:: Float(minimum: int = None, maximum: int = None, choices: Iterable = None, type_name: str = 'number type', cast: Callable = float)
+
+   Bases: :py:obj:`Number`
+
+
+.. py:class:: String(ignore_case: bool = False, max_length: int = None, choices: Iterable = None, type_name: str = 'string type')
+
+   Bases: :py:obj:`Type`
+
+
+   .. py:attribute:: _ignore_case
+      :value: False
+
+
+
+   .. py:attribute:: _max_length
+      :value: None
+
+
+
+   .. py:attribute:: _choices
+      :value: []
+
+
+
+   .. py:method:: __call__(value)
+
+      Value is passed to the type object for the object to verify that the value
+      matches the parameters defined for the type.
+      :param value:
+      :return:
+
+
+
+.. py:class:: Boolean(type_name: str = 'boolean type')
+
+   Bases: :py:obj:`Type`
+
+
+   .. py:attribute:: TRUE
+      :value: ['true', '1', 'on', 'yes']
+
+
+
+   .. py:attribute:: FALSE
+      :value: ['false', '0', 'off', 'no']
+
+
+
+   .. py:method:: __call__(value)
+
+      Value is passed to the type object for the object to verify that the value
+      matches the parameters defined for the type.
+      :param value:
+      :return:
+
+
+

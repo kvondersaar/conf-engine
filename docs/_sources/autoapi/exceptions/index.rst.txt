@@ -1,0 +1,94 @@
+exceptions
+==========
+
+.. py:module:: exceptions
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   exceptions.ConfigError
+   exceptions.UnregisteredOption
+   exceptions.UnregisteredGroup
+   exceptions.DuplicateOptionError
+   exceptions.ValueNotFound
+
+
+Module Contents
+---------------
+
+.. py:exception:: ConfigError(message)
+
+   Bases: :py:obj:`Exception`
+
+
+   Common base class for all non-exit exceptions.
+
+
+   .. py:attribute:: message
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+.. py:exception:: UnregisteredOption(message)
+
+   Bases: :py:obj:`ConfigError`
+
+
+   Common base class for all non-exit exceptions.
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+.. py:exception:: UnregisteredGroup(message)
+
+   Bases: :py:obj:`ConfigError`
+
+
+   Common base class for all non-exit exceptions.
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+.. py:exception:: DuplicateOptionError(message)
+
+   Bases: :py:obj:`ConfigError`
+
+
+   Common base class for all non-exit exceptions.
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+.. py:exception:: ValueNotFound(message)
+
+   Bases: :py:obj:`ConfigError`
+
+
+   Common base class for all non-exit exceptions.
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+

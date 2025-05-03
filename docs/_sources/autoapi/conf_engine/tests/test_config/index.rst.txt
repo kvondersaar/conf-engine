@@ -1,0 +1,46 @@
+conf_engine.tests.test_config
+=============================
+
+.. py:module:: conf_engine.tests.test_config
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   conf_engine.tests.test_config.test_register_option
+   conf_engine.tests.test_config.test_register_options
+   conf_engine.tests.test_config.test_register_options_in_group
+   conf_engine.tests.test_config.test_register_same_option_name_with_different_params
+   conf_engine.tests.test_config.test_register_same_option_name_with_same_params
+   conf_engine.tests.test_config.test_default_options
+   conf_engine.tests.test_config.test_option_precedence
+   conf_engine.tests.test_config.test_option_value_caching
+   conf_engine.tests.test_config.test_option_value_cache_flush
+   conf_engine.tests.test_config.test_custom_config_namespace
+
+
+Module Contents
+---------------
+
+.. py:function:: test_register_option(test_ini_directory, test_config, monkeypatch)
+
+.. py:function:: test_register_options(test_ini_directory, test_config, monkeypatch)
+
+.. py:function:: test_register_options_in_group(test_ini_directory, test_config, monkeypatch)
+
+.. py:function:: test_register_same_option_name_with_different_params(test_config)
+
+.. py:function:: test_register_same_option_name_with_same_params(test_config)
+
+.. py:function:: test_default_options(test_ini_directory, test_config, monkeypatch)
+
+.. py:function:: test_option_precedence(test_ini_directory, test_config, monkeypatch)
+
+.. py:function:: test_option_value_caching(test_config, monkeypatch)
+
+.. py:function:: test_option_value_cache_flush(test_config, monkeypatch)
+
+.. py:function:: test_custom_config_namespace(test_env, test_group, test_expression, monkeypatch)
+

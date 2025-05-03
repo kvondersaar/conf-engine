@@ -1,0 +1,25 @@
+conf_engine.parsers.tests.test_cli
+==================================
+
+.. py:module:: conf_engine.parsers.tests.test_cli
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   conf_engine.parsers.tests.test_cli.test_get_cli_var
+   conf_engine.parsers.tests.test_cli.test_get_cli_boolean
+   conf_engine.parsers.tests.test_cli.test_get_cli_missing_value
+
+
+Module Contents
+---------------
+
+.. py:function:: test_get_cli_var(test_opt, test_group, test_ns, monkeypatch)
+
+.. py:function:: test_get_cli_boolean(flag, add_argv, expected, monkeypatch)
+
+.. py:function:: test_get_cli_missing_value(add_argv, monkeypatch)
+

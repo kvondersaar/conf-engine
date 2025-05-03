@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage &#8212; config-engine 1.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=def86cc0" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+    
+    <script src="_static/documentation_options.js?v=fc837d61"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="autoapi/index.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="autoapi/index.html" title="API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">config-engine 1.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
+<section id="basic-concepts">
+<h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Link to this heading">¶</a></h2>
+<p>Config Engine works defining configuration options in a consistent manner by
+registering <a class="reference internal" href="autoapi/conf_engine/options/index.html#conf_engine.options.Option" title="conf_engine.options.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">Option</span></code></a> objects to a
+<a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.Configuration" title="conf_engine.configuration.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configuration</span></code></a> object.  The Option
+objects can represent a particular option type and may have their own options
+for defining constraints on the option values.  For example a
+<a class="reference internal" href="autoapi/conf_engine/options/index.html#conf_engine.options.NumberOption" title="conf_engine.options.NumberOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumberOption</span></code></a> has the ability to define a range
+using minimum and maximum values.</p>
+<p>A <a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.Configuration" title="conf_engine.configuration.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configuration</span></code></a> does not need to have
+all options registered before attempting to read configuration.  This allows
+individual modules and libraries that share the use of Config Engine to be
+able to register their own option sets independently as long as they do not
+have name conflicts.</p>
+</section>
+<section id="registering-and-reading-options">
+<h2>Registering and Reading Options<a class="headerlink" href="#registering-and-reading-options" title="Link to this heading">¶</a></h2>
+<p>While it is possible to have multiple instances of the
+py:class:<cite>~conf_engine.configuration.Configuration</cite> object, it’s typically
+not needed.  Most use cases can take advantage of the module level object.
+In the below example the module level object is used to register a string
+option for both a username and password.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Registering and reading options.</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">options</span>
+
+<span class="c1"># Create option list.</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">BooleanOption</span><span class="p">(</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Register options.</span>
+<span class="n">config</span><span class="o">.</span><span class="n">register_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+<span class="c1"># Read option values.</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">username</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">password</span>
+
+
+</pre></div>
+</div>
+</div>
+<p>In the above example a debug mode option is also registered with a default
+value of <cite>False</cite>.  Default values will be returned if a value for the option
+cannot be found in any of the configuration sources.</p>
+</section>
+<section id="option-groups">
+<h2>Option Groups<a class="headerlink" href="#option-groups" title="Link to this heading">¶</a></h2>
+<p>Groups can be used to organize options with a similar purpose.  For example
+an application may need to access two different APIs.  By utilizing groups
+the credentials for each API can be defined separately using similar naming
+semantics.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Registering and accessing option groups.</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">options</span>
+
+<span class="c1"># Create option list.</span>
+<span class="n">api1_options</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;api_url&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">api2_options</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;api_url&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">NumberOption</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Register options.</span>
+<span class="n">config</span><span class="o">.</span><span class="n">register_options</span><span class="p">(</span><span class="n">api1_options</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;api1&#39;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">register_options</span><span class="p">(</span><span class="n">api2_options</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;api2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Read option values.</span>
+<span class="n">api1_username</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">api1</span><span class="o">.</span><span class="n">username</span>
+<span class="n">api2_version</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">api2</span><span class="o">.</span><span class="n">version</span>
+
+</pre></div>
+</div>
+</div>
+</section>
+<section id="creating-and-consuming-configuration">
+<h2>Creating and Consuming Configuration<a class="headerlink" href="#creating-and-consuming-configuration" title="Link to this heading">¶</a></h2>
+<p>Configuration data can be consumed by Config Engine from either operating
+system environment variables or from <cite>ini</cite> style files.  When consuming from
+environment variables options names are capitalized and prepended with their
+group name followed by an <code class="docutils literal notranslate"><span class="pre">_</span></code> character.  For <cite>ini</cite> style configuration
+all options must be defined in sections.  The section name corresponds with
+the option group and the <code class="docutils literal notranslate"><span class="pre">[DEFAULT]</span></code> section is used for any options
+defined with no group.</p>
+<p>By default Config Engine will look int the current working directory for
+any files with the <code class="docutils literal notranslate"><span class="pre">.ini</span></code> extension and load them as configuration.
+However it is possible to define the location of configuration data by using
+the <code class="docutils literal notranslate"><span class="pre">--config-file</span></code> and <code class="docutils literal notranslate"><span class="pre">--config-directory</span></code> CLI options when starting
+your application.</p>
+</section>
+<section id="configuration-data-caching">
+<h2>Configuration Data Caching<a class="headerlink" href="#configuration-data-caching" title="Link to this heading">¶</a></h2>
+<p>By default Config Engine will store the value of a configuration option
+once it has been read from the configuration source.  However, this
+caching behavior can be disabled by passing <cite>cache=False</cite> when creating
+a <a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.Configuration" title="conf_engine.configuration.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configuration</span></code></a> object, or a
+<a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.ConfigGroup" title="conf_engine.configuration.ConfigGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigGroup</span></code></a>.</p>
+<p>Cached data can also be invalidated by calling the <cite>flush_cache()</cite>
+method on either the <a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.Configuration" title="conf_engine.configuration.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configuration</span></code></a>
+object, or the <a class="reference internal" href="autoapi/conf_engine/configuration/index.html#conf_engine.configuration.ConfigGroup" title="conf_engine.configuration.ConfigGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigGroup</span></code></a> as
+well.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Registering and accessing option groups.</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">options</span>
+
+<span class="c1"># Create option list.</span>
+<span class="n">cache_options</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">),</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">no_cache_options</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">BooleanOption</span><span class="p">(</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Create two configuration groups, one that caches, and one that does not.</span>
+<span class="c1"># Then register the options.</span>
+<span class="n">caching_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">no_cache_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">caching_config</span><span class="o">.</span><span class="n">register_options</span><span class="p">(</span><span class="n">cache_options</span><span class="p">)</span>
+<span class="n">no_cache_config</span><span class="o">.</span><span class="n">register_options</span><span class="p">(</span><span class="n">no_cache_options</span><span class="p">)</span>
+
+<span class="c1"># This will only read from source once, and then use that</span>
+<span class="c1"># value in subsequent lookups</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">caching_config</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
+
+<span class="c1"># This will only read from configuration source, and never</span>
+<span class="c1"># from the cache.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">no_cache_options</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+</div>
+</section>
+<section id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Link to this heading">¶</a></h2>
+<p>The environment parser supports an optional namespace which will
+prepend each option with the namespace and an underscore to help
+ensure that the given option doesn’t have a name collision with other
+unrelated environment variables.  Namespaces require the use of a
+declared configuration object rather than using the one provided
+in the ConfEngine module.  Declaring options and accessing option
+values through the configuration object remains unchanged.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Using namespaces.</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Export your var before running the script.</span>
+
+<span class="sd">.. code-block:</span>
+<span class="sd">    ~# export TESTNS_MYGROUP_MY_VAR=namespaces</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">conf_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">options</span>
+
+<span class="c1"># Create config object.</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;testns&#39;</span><span class="p">)</span>
+<span class="c1"># Register options.</span>
+<span class="n">config</span><span class="o">.</span><span class="n">register_option</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">StringOption</span><span class="p">(</span><span class="s1">&#39;my_var&#39;</span><span class="p">))</span>
+
+<span class="k">assert</span> <span class="n">config</span><span class="o">.</span><span class="n">my_var</span> <span class="o">==</span> <span class="s1">&#39;namespaces&#39;</span>
+
+
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#basic-concepts">Basic Concepts</a></li>
+<li><a class="reference internal" href="#registering-and-reading-options">Registering and Reading Options</a></li>
+<li><a class="reference internal" href="#option-groups">Option Groups</a></li>
+<li><a class="reference internal" href="#creating-and-consuming-configuration">Creating and Consuming Configuration</a></li>
+<li><a class="reference internal" href="#configuration-data-caching">Configuration Data Caching</a></li>
+<li><a class="reference internal" href="#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="installation.html"
+                          title="previous chapter">Installation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="autoapi/index.html"
+                          title="next chapter">API Reference</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="autoapi/index.html" title="API Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">config-engine 1.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2022, Connectria, LLC.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    </div>
+  </body>
+</html>

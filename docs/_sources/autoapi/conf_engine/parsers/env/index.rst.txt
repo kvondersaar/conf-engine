@@ -1,0 +1,27 @@
+conf_engine.parsers.env
+=======================
+
+.. py:module:: conf_engine.parsers.env
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   conf_engine.parsers.env.EnvironmentParser
+
+
+Module Contents
+---------------
+
+.. py:class:: EnvironmentParser(namespace: str = None, **kwargs)
+
+   .. py:attribute:: namespace
+      :value: None
+
+
+
+   .. py:method:: get_option_value(option: conf_engine.options.Option, group: str = None)
+
+

@@ -1,0 +1,151 @@
+conf_engine.configuration
+=========================
+
+.. py:module:: conf_engine.configuration
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   conf_engine.configuration.REGISTERED_PARSERS
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   conf_engine.configuration.ConfigGroup
+   conf_engine.configuration.Configuration
+
+
+Module Contents
+---------------
+
+.. py:data:: REGISTERED_PARSERS
+
+.. py:class:: ConfigGroup(name: Union[str, None], namespace: str = None, cache: bool = True)
+
+   .. py:attribute:: _name
+
+
+   .. py:attribute:: _namespace
+      :value: None
+
+
+
+   .. py:attribute:: _cache
+      :value: True
+
+
+
+   .. py:attribute:: _opt_cache
+
+
+   .. py:attribute:: _value_cache
+
+
+   .. py:method:: __getattr__(item: str)
+
+
+   .. py:method:: __contains__(item)
+
+
+   .. py:method:: _get_option(option: str)
+
+
+   .. py:method:: _cache_option_value(name, value)
+
+
+   .. py:method:: _get_option_value_from_cache(name)
+
+
+   .. py:method:: _option_value_cached(name)
+
+
+   .. py:method:: _get_option_value(option: conf_engine.options.Option, group)
+
+
+   .. py:method:: _get_option_value_from_source(option: conf_engine.options.Option, group)
+
+
+   .. py:method:: flush_cache(name: str = None)
+
+      Flush the value cache and read from configuration source on
+      next access.
+      :param name: If name is provided, only the value for the named
+      option is flushed.
+      :return:
+
+
+
+   .. py:method:: register_options(options: [conf_engine.options.Option])
+
+
+   .. py:method:: register_option(option: conf_engine.options.Option)
+
+
+.. py:class:: Configuration(namespace: str = None, cache: bool = True)
+
+   .. py:attribute:: _cache
+      :value: True
+
+
+
+   .. py:attribute:: _group_cache
+
+
+   .. py:attribute:: _namespace
+      :value: None
+
+
+
+   .. py:method:: __getattr__(item)
+
+
+   .. py:method:: __contains__(item)
+
+
+   .. py:method:: register_options(options: [conf_engine.options.Option], group: str = None)
+
+      Register bulk options with the config.
+      :param options: List of options.
+      :param group: Group name to which options are added.
+      :return:
+
+
+
+   .. py:method:: flush_cache()
+
+      Signal all configuration groups to flush their cache and
+      read from configuration source on next access.
+
+
+
+   .. py:method:: register_option(option: conf_engine.options.Option, group: str = None, create_group: bool = True)
+
+      Register options with the config.  If group is specified, the options are
+      added to the option group, otherwise options are registered to the base object.
+      :param option: Option to register.
+      :param group: Group name to which the option is added.
+      :param create_group: Create the group if not already registered.
+      :return:
+
+
+
+   .. py:property:: registered_parsers
+
+
+   .. py:method:: _get_group(group: str)
+
+      Get group by its name as called during attribute access against the
+      configuration object.  If the option cannot be found an UnregisteredOption
+      error will be raised.
+
+      If the option matches a group name, the group object is returned and the
+      subsequent attribute access is handled by the group object.
+
+
+

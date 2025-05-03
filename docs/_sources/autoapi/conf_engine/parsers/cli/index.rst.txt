@@ -1,0 +1,36 @@
+conf_engine.parsers.cli
+=======================
+
+.. py:module:: conf_engine.parsers.cli
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   conf_engine.parsers.cli.CLIParser
+
+
+Module Contents
+---------------
+
+.. py:class:: CLIParser(namespace: str = None, **kwargs)
+
+   .. py:attribute:: namespace
+      :value: None
+
+
+
+   .. py:method:: get_option_value(option: conf_engine.options.Option, group: str = None)
+
+
+   .. py:method:: _parse_argv(opt_name: str)
+      :staticmethod:
+
+
+      Parse the value of sys.argv and return a tuple indicating if the option
+      is present, and it's value.
+
+
+

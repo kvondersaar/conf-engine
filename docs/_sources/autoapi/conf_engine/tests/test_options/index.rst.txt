@@ -1,0 +1,52 @@
+conf_engine.tests.test_options
+==============================
+
+.. py:module:: conf_engine.tests.test_options
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   conf_engine.tests.test_options.test_string_option
+   conf_engine.tests.test_options.test_string_option_to_type_constructor
+   conf_engine.tests.test_options.test_number_option
+   conf_engine.tests.test_options.test_number_option_to_type_constructor
+   conf_engine.tests.test_options.test_boolean_option
+   conf_engine.tests.test_options.test_proper_default
+   conf_engine.tests.test_options.test_improper_default
+
+
+Module Contents
+---------------
+
+.. py:function:: test_string_option()
+
+   Test default values work and cast to string accordingly.
+
+
+.. py:function:: test_string_option_to_type_constructor()
+
+   Verify that all options are passed through to the type constructor.
+
+
+.. py:function:: test_number_option()
+
+   Test default values work and cast to int accordingly.
+
+
+.. py:function:: test_number_option_to_type_constructor()
+
+   Verify that all options are passed through to the type constructor.
+
+
+.. py:function:: test_boolean_option()
+
+   Test default values work and cast to bool accordingly.
+
+
+.. py:function:: test_proper_default()
+
+.. py:function:: test_improper_default()
+
