@@ -3,6 +3,7 @@
 config-engine.iml
 
 */.pytest_cache/
+.pytest_cache
 venv/
 
 build/

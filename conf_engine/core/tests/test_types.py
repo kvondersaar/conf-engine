@@ -1,4 +1,4 @@
-import conf_engine.types as types
+import conf_engine.core.types as types
 import pytest
 
 
