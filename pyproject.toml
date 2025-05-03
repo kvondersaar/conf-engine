@@ -24,8 +24,8 @@ classifiers=[
 ]
 
 [project.urls]
-#Homepage = "https://example.com"
-#Documentation = "https://readthedocs.org"
+Homepage = "https://kvondersaar.github.io/conf-engine/"
+Documentation = "https://kvondersaar.github.io/conf-engine/"
 Repository = "https://github.com/kvondersaar/conf-engine.git"
 Issues = "https://github.com/kvondersaar/conf-engine/issues"
 Changelog = "https://github.com/kvondersaar/conf-engine/blob/master/CHANGELOG.rst"

@@ -20,7 +20,6 @@ from conf_engine.__version__ import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'config-engine'
-copyright = '2022, Connectria, LLC'
 author = 'Ken Vondersaar'
 
 # The short X.Y version

@@ -17,7 +17,7 @@ directly from `Github <https://github.com`.
 .. code-block:: shell
    :caption: Install direct from Github.
 
-    ~/# pip install git+https://github.com/Connectira/conf-engine
+    ~/# pip install git+https://github.com/kvondersaar/conf-engine
 
 Manual Install
 --------------
