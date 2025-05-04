@@ -20,7 +20,6 @@ from conf_engine.__version__ import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'config-engine'
-copyright = '2022, Connectria, LLC'
 author = 'Ken Vondersaar'
 
 # The short X.Y version
@@ -51,8 +50,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['test_*', 'conftest.py']
-
+autoapi_ignore = ['*/tests/*', '*/conftest.py']
 
 # -- Options for HTML output -------------------------------------------------
 
