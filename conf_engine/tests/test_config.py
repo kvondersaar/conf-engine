@@ -119,3 +119,17 @@ def test_custom_config_namespace(test_env, test_group,
     config.register_option(StringOption('test_var'), group=test_group)
     value = eval(test_expression)
     assert value == 'test_value'
+
+@pytest.mark.parametrize('test_option, test_group', [
+    ('my_option', None),
+    ('my_option', 'my_group')
+])
+def test_value_not_found(test_option, test_group):
+    from conf_engine import config, options
+    from conf_engine.core.exceptions import ValueNotFound
+    config.register_option(options.StringOption(test_option), test_group)
+    with pytest.raises(ValueNotFound):
+        if test_group:
+            getattr(getattr(config, test_group), test_option)
+        else:
+            getattr(config, test_option)
