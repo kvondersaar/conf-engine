@@ -6,16 +6,17 @@ authors = [
 maintainers = [
     {name = "Ken Vondersaar", email = "ken.vondersaar@gmail.com"}
 ]
-description = "A python module for unified application configuration."
+description = "A Python module for unified application configuration."
 readme = "README.rst"
-keywords = ['config', 'configuration']
+keywords = ['conf', 'config', 'configuration', 'appconfig']
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Development Status :: 4 - Beta",
+    "Software Development :: Libraries",
+    "Development Status :: 5 - Production/Stable",
     "Operating System :: OS Independent",
 ]
 license = "MIT"
