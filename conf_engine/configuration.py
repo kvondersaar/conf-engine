@@ -80,7 +80,10 @@ class ConfigGroup:
         if option.default is not UNDEFINED:
             return option.option_type(option.default)
         # If we get here, then we've not found the value.
-        raise cfg_exc.ValueNotFound(option.name)
+        fq_name = option.name
+        if self._name:
+            fq_name = self._name + '.' + fq_name
+        raise cfg_exc.ValueNotFound(fq_name)
 
     def flush_cache(self, name: str = None):
         """
